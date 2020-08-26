@@ -11,16 +11,19 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class PostService {
 
   static HashMap<Long, PostWithComments> allPosts = new HashMap();
 
   public List<Post> getAllPosts() {
     Collection<PostWithComments> values = allPosts.values();
+    log.info("Fetching all posts : {}",values);
     List<Post> postsList =
         values.stream()
             .map(
@@ -34,11 +37,13 @@ public class PostService {
   }
 
   public PostWithComments getPost(Long id) {
+    log.info("Fetching Post based on id : {}",id);
     return allPosts.get(id);
   }
 
   public PostWithComments savePost(PostWithComments postWithComments) {
     allPosts.put(postWithComments.getId(), postWithComments);
+    log.info("Post saved : {}",allPosts);
     return postWithComments;
   }
 
@@ -62,5 +67,6 @@ public class PostService {
     postWithComments.setCommentsList(commentList);
 
     allPosts.put(post.getId(),postWithComments);
+    log.info("all post after initial load : {}",allPosts);
   }
 }
