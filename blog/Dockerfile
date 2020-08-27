@@ -7,6 +7,7 @@ ARG JAR_FILE=build/libs/*.jar
 
 # Add the application's jar to the container
 ADD ${JAR_FILE} code.jar
+RUN mkdir logs
 
 EXPOSE 9001/tcp
 
