@@ -8,7 +8,7 @@
 - Kibaana : A visualization tool to view data from elastic datasource
 
 ## Running on Docker
-![SpringbootDocker](SprintbootELK.png)
+![SpringbootDocker](SpringbootELK.png)
 
 ## Local Setup
 - Clean and build the spring boot application using gradle.
