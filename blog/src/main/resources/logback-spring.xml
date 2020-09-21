@@ -29,6 +29,7 @@
 
     <root level="INFO">
       <appender-ref ref="APP-LOGS-FILE"/>
+<!--      <appender-ref ref="consoleAppender" />-->
     </root>
   </springProfile>
 

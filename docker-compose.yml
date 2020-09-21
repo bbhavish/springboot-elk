@@ -7,7 +7,25 @@ services:
     ports:
       - "9001:9001"
     volumes:
-      - "./logs:/app/logs"
+      - "./volumes/logs:/app/logs"
+    networks:
+      - app
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./volumes/prometheus/app-prom.yml:/etc/prometheus/prometheus.yml"
+    networks:
+      - app
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./volumes/grafana-blog-vol/prom_db/data:/var/lib/grafana"
     networks:
       - app
 
@@ -19,7 +37,7 @@ services:
       - "discovery.type=single-node"
       - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
     volumes:
-      - "~/Lowes/volumes/elastic-blog-vol/data01:/usr/share/elasticsearch/data:rw"
+      - "./volumes/elastic-blog-vol/data01:/usr/share/elasticsearch/data:rw"
 
   logstash:
     image: logstash:7.6.2
@@ -27,7 +45,7 @@ services:
       - "25826:25826"
       - "5044:5044"
     volumes:
-      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./volumes/logstash/pipeline:/usr/share/logstash/pipeline:ro
     restart: on-failure
     depends_on:
       - elasticsearch
@@ -43,10 +61,10 @@ services:
   filebeat:
     image: elastic/filebeat:7.9.0
     volumes:
-      - ./filebeat/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro        # Configuration file
-      - ./logs/:/var/lib/docker/containers:ro                                      # Docker logs
+      - ./volumes/filebeat/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro        # Configuration file
+      - ./volumes/logs/:/var/lib/docker/containers:ro                                      # Docker logs
       - /var/run/docker.sock:/var/run/docker.sock:ro                              # Additional information about containers
-      - "~/Lowes/volumes/filebeat-blog-vol/data01:/usr/share/filebeat/data:rw"     # Persistence data
+      - "./volumes/filebeat-blog-vol/data01:/usr/share/filebeat/data:rw"     # Persistence data
     user: root                                                                    # Allow access to log files and docker.sock
     restart: on-failure
     depends_on:
