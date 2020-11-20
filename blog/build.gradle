@@ -46,6 +46,9 @@ dependencies {
 	//prometheus
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 
+	//chaos
+	implementation 'de.codecentric:chaos-monkey-spring-boot:2.2.0'
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

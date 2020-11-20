@@ -1,9 +1,27 @@
+spring:
+  profiles:
+    active: 'chaos-monkey'
+
+chaos:
+  monkey:
+    enabled: true
+    watcher:
+      component: false
+      controller: false
+      repository: false
+      rest-controller: true
+      service: true
+
 management:
   endpoints:
+    chaosmonkey:
+      enabled: true
+    chaosmonkeyjmx:
+      enabled: true
     web:
       base-path: /management
       exposure:
-        include: ["*"]
+        include: "*"
   metrics:
     enabled: true
     export:

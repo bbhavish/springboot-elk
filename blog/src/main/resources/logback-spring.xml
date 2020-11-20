@@ -6,7 +6,7 @@
   <springProperty scope="context" name="application_name" source="spring.application.name"/>
 
 
-  <springProfile name="default">
+  <springProfile name="default|chaos-monkey">
     <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
       <encoder class="net.logstash.logback.encoder.LogstashEncoder">
         <timestampPattern>yyyy-MM-dd'T'HH:mm:ss.SSS</timestampPattern>
@@ -29,7 +29,7 @@
 
     <root level="INFO">
       <appender-ref ref="APP-LOGS-FILE"/>
-<!--      <appender-ref ref="consoleAppender" />-->
+      <appender-ref ref="consoleAppender" />
     </root>
   </springProfile>
 
